@@ -1,0 +1,333 @@
+/* src/styles.css */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* Your custom styles */
+:where([class^="ri-"])::before {
+  content: "\f3c2";
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+}
+
+/* All the custom animations */
+.snowflake {
+  position: fixed;
+  top: -10px;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1em;
+  animation: fall linear infinite;
+  z-index: 1;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(100vh);
+  }
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.neon-glow {
+  box-shadow: 0 0 20px rgba(0, 191, 255, 0.5);
+}
+
+.neon-text {
+  text-shadow: 0 0 10px rgba(0, 191, 255, 0.8);
+}
+
+.glacier-bg {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #334155 50%, #475569 75%, #64748b 100%);
+}
+
+.winter-bg {
+  background: linear-gradient(135deg, #0c4a6e 0%, #0369a1 25%, #0284c7 50%, #0ea5e9 75%, #38bdf8 100%);
+}
+
+.code-editor {
+  background: #1e1e1e;
+  color: #d4d4d4;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+}
+
+.progress-bar {
+  background: linear-gradient(90deg, #00BFFF 0%, #1E90FF 100%);
+}
+
+.floating-animation {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.slide-in {
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+
+.pulse-glow {
+  animation: pulseGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes pulseGlow {
+  from { box-shadow: 0 0 20px rgba(0, 191, 255, 0.5); }
+  to { box-shadow: 0 0 30px rgba(0, 191, 255, 0.8); }
+}
+
+/* Preloader Animations */
+.christmas-tree {
+  animation: treeGlow 2s ease-in-out infinite alternate;
+}
+
+.tree-star {
+  font-size: 2rem;
+  animation: starTwinkle 1s ease-in-out infinite;
+  display: block;
+  text-align: center;
+}
+
+.tree-layer {
+  font-size: 3rem;
+  display: block;
+  text-align: center;
+  animation: treeShake 2s ease-in-out infinite;
+}
+
+.tree-layer-1 { animation-delay: 0.1s; }
+.tree-layer-2 { animation-delay: 0.2s; }
+.tree-layer-3 { animation-delay: 0.3s; }
+
+.tree-trunk {
+  font-size: 1.5rem;
+  display: block;
+  text-align: center;
+}
+
+@keyframes treeGlow {
+  0% { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(60deg); }
+}
+
+@keyframes starTwinkle {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(180deg) scale(1.2); }
+}
+
+@keyframes treeShake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-2px); }
+  75% { transform: translateX(2px); }
+}
+
+.typewriter {
+  overflow: hidden;
+  border-right: 3px solid rgba(255, 255, 255, 0.75);
+  white-space: nowrap;
+  animation: typewriter 3s steps(40, end), blink-caret 0.75s step-end infinite;
+}
+
+@keyframes typewriter {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent; }
+  50% { border-color: rgba(255, 255, 255, 0.75); }
+}
+
+.loading-progress {
+  width: 0%;
+  animation: loadingProgress 4s ease-in-out forwards;
+}
+
+@keyframes loadingProgress {
+  0% { width: 0%; }
+  25% { width: 30%; }
+  50% { width: 60%; }
+  75% { width: 85%; }
+  100% { width: 100%; }
+}
+
+.fade-in-delayed {
+  opacity: 0;
+  animation: fadeInDelayed 1s ease-in-out 1s forwards;
+}
+
+@keyframes fadeInDelayed {
+  to { opacity: 1; }
+}
+
+.christmas-float {
+  position: absolute;
+  font-size: 2rem;
+  animation: christmasFloat 6s ease-in-out infinite;
+}
+
+.christmas-gift-1 { top: 10%; left: 10%; animation-delay: 0s; }
+.christmas-gift-2 { top: 20%; right: 15%; animation-delay: 1s; }
+.christmas-gift-3 { bottom: 30%; left: 20%; animation-delay: 2s; }
+.christmas-gift-4 { top: 60%; right: 10%; animation-delay: 3s; }
+.christmas-gift-5 { bottom: 20%; right: 25%; animation-delay: 4s; }
+
+@keyframes christmasFloat {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33% { transform: translateY(-20px) rotate(10deg); }
+  66% { transform: translateY(-10px) rotate(-5deg); }
+}
+
+/* Aurora Animation */
+.aurora-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.aurora {
+  position: absolute;
+  width: 100%;
+  height: 300px;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(0, 255, 150, 0.3),
+    rgba(0, 150, 255, 0.3),
+    rgba(255, 0, 150, 0.3),
+    transparent
+  );
+  animation: auroraMove 10s ease-in-out infinite;
+  border-radius: 50%;
+  filter: blur(3px);
+}
+
+.aurora-1 { top: 10%; animation-delay: 0s; }
+.aurora-2 { top: 30%; animation-delay: 3s; }
+.aurora-3 { top: 50%; animation-delay: 6s; }
+
+@keyframes auroraMove {
+  0%, 100% { transform: translateX(-100%) skewX(-15deg); opacity: 0; }
+  50% { transform: translateX(100%) skewX(15deg); opacity: 1; }
+}
+
+/* Floating Christmas Elements */
+.floating-christmas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.christmas-element {
+  position: absolute;
+  font-size: 1.5rem;
+  animation: floatElement 8s ease-in-out infinite;
+}
+
+.element-1 { top: 15%; left: 5%; animation-delay: 0s; }
+.element-2 { top: 25%; right: 10%; animation-delay: 1.5s; }
+.element-3 { bottom: 35%; left: 15%; animation-delay: 3s; }
+.element-4 { top: 45%; right: 20%; animation-delay: 4.5s; }
+.element-5 { bottom: 25%; right: 5%; animation-delay: 6s; }
+.element-6 { bottom: 45%; left: 25%; animation-delay: 7.5s; }
+
+@keyframes floatElement {
+  0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); opacity: 0.7; }
+  25% { transform: translateY(-30px) rotate(90deg) scale(1.1); opacity: 1; }
+  50% { transform: translateY(-15px) rotate(180deg) scale(0.9); opacity: 0.8; }
+  75% { transform: translateY(-25px) rotate(270deg) scale(1.05); opacity: 0.9; }
+}
+
+.animate-ken-burns {
+  animation: kenBurns 20s ease-in-out infinite;
+}
+
+@keyframes kenBurns {
+  0% { transform: scale(1.1) translate(0px, 0px); }
+  25% { transform: scale(1.2) translate(-20px, -10px); }
+  50% { transform: scale(1.15) translate(10px, -15px); }
+  75% { transform: scale(1.25) translate(-15px, 5px); }
+  100% { transform: scale(1.1) translate(0px, 0px); }
+}
+
+.card-entrance {
+  animation: cardEntrance 1s ease-out;
+}
+
+@keyframes cardEntrance {
+  0% {
+    opacity: 0;
+    transform: translateY(50px) scale(0.9);
+    filter: blur(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px) scale(1);
+    filter: blur(0px);
+  }
+}
+
+.question-card {
+  transition: all 0.3s ease;
+}
+
+.question-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.timer-glow {
+  animation: timerPulse 1s ease-in-out infinite;
+}
+
+@keyframes timerPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 191, 255, 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 191, 255, 0.5);
+}

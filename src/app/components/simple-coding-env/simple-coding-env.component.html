@@ -1,0 +1,159 @@
+<div class="min-h-screen bg-gray-900 text-white p-6">
+  <div class="max-w-6xl mx-auto">
+    <header class="mb-8 text-center">
+      <h1 class="text-3xl font-bold mb-2">Simple Code Compiler</h1>
+      <p class="text-gray-400">Write, test, and debug your code in multiple languages</p>
+    </header>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <!-- Code Editor Section -->
+      <div class="bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+        <div class="bg-gray-700 px-4 py-3 flex items-center justify-between">
+          <h2 class="font-semibold">Code Editor</h2>
+          <div class="flex items-center space-x-2">
+            <span class="text-sm text-gray-300">Language:</span>
+            <select 
+              [(ngModel)]="selectedLanguage" 
+              (change)="selectLanguage(selectedLanguage)"
+              class="bg-gray-600 text-white rounded px-2 py-1 text-sm">
+              <option *ngFor="let lang of languages" [value]="lang.value">
+                {{ lang.label }}
+              </option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="p-4 relative">
+          <div #editorContainer class="border border-gray-600 rounded relative" style="height: 400px;">
+            <!-- Monaco Editor will be injected here -->
+          </div>
+          
+          <!-- Fallback textarea for when Monaco isn't available -->
+          <div *ngIf="!monacoLoaded" class="flex">
+            <!-- Line numbers -->
+            <div class="bg-gray-800 text-gray-500 text-right py-4 pr-2 font-mono text-sm select-none">
+              <div *ngFor="let line of code.split('\n'); let i = index" 
+                   class="px-2"
+                   [ngClass]="getErrorForLine(i+1) ? 'text-red-400 bg-red-900/30' : ''">
+                {{ i + 1 }}
+              </div>
+            </div>
+            
+            <!-- Code editor -->
+            <textarea
+              [(ngModel)]="code"
+              (input)="onCodeInput($event)"
+              (keydown)="onKeyDown($event)"
+              class="flex-1 h-96 bg-gray-900 text-green-400 font-mono text-sm p-4 resize-none focus:outline-none"
+              placeholder="Write your code here..."
+              spellcheck="false">
+            </textarea>
+            
+            <!-- Suggestions dropdown -->
+            <div *ngIf="suggestions.length > 0" 
+                 class="absolute bg-gray-700 border border-gray-600 rounded shadow-lg w-64 max-h-48 overflow-y-auto z-10"
+                 style="top: 10px; right: 10px;">
+              <div *ngFor="let suggestion of suggestions" 
+                   (click)="insertSuggestion(suggestion)"
+                   class="px-3 py-2 text-sm text-white hover:bg-gray-600 cursor-pointer">
+                {{ suggestion }}
+              </div>
+            </div>
+          </div>
+            
+          <div class="mt-4 flex justify-between items-center">
+            <div class="text-sm text-gray-400">
+              Lines: {{ getLineCount() }}
+            </div>
+            <button 
+              (click)="runCode()"
+              class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded flex items-center">
+              <span>▶</span>
+              <span class="ml-2">Run Code</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Output and Results Section -->
+      <div class="space-y-6">
+        <!-- Console Output -->
+        <div class="bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+          <div class="bg-gray-700 px-4 py-3">
+            <h2 class="font-semibold">Console Output</h2>
+          </div>
+          <div #outputContainer class="p-4 h-48 overflow-y-auto">
+            <pre *ngIf="output; else noOutput" class="text-green-400 font-mono text-sm whitespace-pre-wrap">{{ output }}</pre>
+            <ng-template #noOutput>
+              <p class="text-gray-500 italic">Run your code to see output here...</p>
+            </ng-template>
+          </div>
+        </div>
+        
+        <!-- Error Panel -->
+        <div *ngIf="errors.length > 0" class="bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+          <div class="bg-red-700 px-4 py-3">
+            <h2 class="font-semibold">Errors Detected</h2>
+          </div>
+          <div class="p-4">
+            <div *ngFor="let error of errors" class="mb-2 last:mb-0">
+              <div class="flex items-start">
+                <span class="text-red-500 mr-2">●</span>
+                <div>
+                  <p class="text-red-300 font-mono text-sm">Line {{ error.line }}: {{ error.message }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Test Results -->
+        <div *ngIf="testResults.length > 0" class="bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+          <div class="bg-gray-700 px-4 py-3">
+            <h2 class="font-semibold">Test Results</h2>
+          </div>
+          <div class="p-4">
+            <div *ngFor="let result of testResults" class="mb-3 last:mb-0">
+              <div class="flex items-center justify-between">
+                <span class="font-medium">Test Case {{ result.testCase }}: {{ result.name }}</span>
+                <span [ngClass]="result.passed ? 'text-green-400' : 'text-red-400'" class="font-mono">
+                  {{ result.status }}
+                </span>
+              </div>
+              <div class="mt-2 text-sm text-gray-400 grid grid-cols-1 md:grid-cols-3 gap-2">
+                <div>
+                  <span class="text-gray-500">Input:</span>
+                  <span class="ml-2 font-mono">{{ result.input }}</span>
+                </div>
+                <div>
+                  <span class="text-gray-500">Expected:</span>
+                  <span class="ml-2 font-mono">{{ result.expected }}</span>
+                </div>
+                <div>
+                  <span class="text-gray-500">Actual:</span>
+                  <span class="ml-2 font-mono">{{ result.actual }}</span>
+                </div>
+              </div>
+              <div *ngIf="result.error" class="mt-2 text-sm text-red-400">
+                <span class="text-gray-500">Error:</span>
+                <span class="ml-2 font-mono">{{ result.error }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Instructions -->
+    <div class="mt-8 bg-gray-800 rounded-lg shadow-lg p-6">
+      <h3 class="font-semibold text-lg mb-3">How to Use</h3>
+      <ul class="list-disc pl-5 space-y-2 text-gray-300">
+        <li>Select your preferred programming language from the dropdown</li>
+        <li>Write your solution in the code editor</li>
+        <li>Click "Run Code" to execute your solution and run test cases</li>
+        <li>View console output, errors, and test results in the panels on the right</li>
+        <li>Your code is automatically checked for syntax errors</li>
+      </ul>
+    </div>
+  </div>
+</div>

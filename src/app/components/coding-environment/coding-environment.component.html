@@ -1,0 +1,248 @@
+<div class="flex flex-col lg:flex-row h-screen relative z-10 p-2 sm:p-3 md:p-4">
+  <!-- Problem Statement -->
+  <div class="lg:w-1/3 xl:w-1/3 2xl:w-2/5 glass-card m-1 sm:m-2 md:m-3 lg:m-4 rounded-xl p-3 sm:p-4 md:p-5 lg:p-6 overflow-y-auto order-2 lg:order-1">
+    <!-- Problem Header -->
+    <div class="mb-3 sm:mb-4 md:mb-5 lg:mb-6">
+      <h3 class="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-white neon-text mb-1 sm:mb-2">
+        {{ getQuestionIndex() + 31 }}. {{ getCurrentCodingQuestion()?.title }}
+      </h3>
+      <div class="flex items-center text-xs sm:text-sm text-blue-300">
+        <i class="ri-time-line mr-1"></i>
+        <span>Recommended time: 15-20 minutes</span>
+      </div>
+    </div>
+    
+    <!-- Problem Description -->
+    <div id="coding-problem" class="text-blue-100 space-y-3 sm:space-y-4">
+      <div class="whitespace-pre-line text-sm sm:text-base leading-relaxed">{{ getCurrentCodingQuestion()?.problem }}</div>
+      
+      <!-- Examples -->
+      <div>
+        <h5 class="font-semibold text-white mb-2 text-base sm:text-lg flex items-center">
+          <i class="ri-file-code-line mr-2"></i> Examples
+        </h5>
+        <div *ngFor="let example of getCurrentCodingQuestion()?.examples; let i = index" 
+             class="bg-white/10 rounded-lg p-3 sm:p-4 mb-2 sm:mb-3">
+          <div class="text-xs sm:text-sm text-blue-200 mb-1 font-medium">Example {{ i + 1 }}:</div>
+          <div class="font-mono text-xs sm:text-sm space-y-1">
+            <div class="flex flex-wrap items-start">
+              <span class="text-blue-300 font-medium mr-2">Input:</span>
+              <code class="text-green-300 break-all">{{ example.input }}</code>
+            </div>
+            <div class="flex flex-wrap items-start">
+              <span class="text-blue-300 font-medium mr-2">Output:</span>
+              <code class="text-yellow-300 break-all">{{ example.output }}</code>
+            </div>
+            <div class="text-blue-200 mt-2 pt-2 border-t border-white/10">
+              <span class="font-medium">Explanation:</span> {{ example.explanation }}
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Constraints -->
+      <div>
+        <h5 class="font-semibold text-white mb-2 text-base sm:text-lg flex items-center">
+          <i class="ri-alert-line mr-2"></i> Constraints
+        </h5>
+        <ul class="list-disc list-inside space-y-1 sm:space-y-2 text-xs sm:text-sm pl-2">
+          <li *ngFor="let constraint of getCurrentCodingQuestion()?.constraints" 
+              class="text-blue-200 leading-relaxed">
+            {{ constraint }}
+          </li>
+        </ul>
+      </div>
+    </div>
+    
+    <!-- Test Cases -->
+    <div class="mt-4 sm:mt-5 md:mt-6">
+      <h4 class="text-base sm:text-lg md:text-xl font-semibold text-white mb-2 sm:mb-3 flex items-center">
+        <i class="ri-checkbox-multiple-line mr-2"></i> Test Cases
+      </h4>
+      <div id="test-cases" class="space-y-2 sm:space-y-3">
+        <div *ngFor="let testCase of getCurrentCodingQuestion()?.testCases; let i = index" 
+             class="bg-white/10 rounded-lg p-2 sm:p-3">
+          <div class="text-xs sm:text-sm text-blue-200 mb-1 font-medium flex items-center">
+            <i class="ri-check-line text-green-400 mr-1"></i>
+            Test Case {{ i + 1 }}
+          </div>
+          <div class="font-mono text-xs space-y-1">
+            <div class="flex flex-wrap items-start">
+              <span class="text-blue-300 font-medium mr-1">Input:</span>
+              <code class="text-green-300 break-all">{{ testCase.input }}</code>
+            </div>
+            <div class="flex flex-wrap items-start">
+              <span class="text-blue-300 font-medium mr-1">Expected:</span>
+              <code class="text-yellow-300 break-all">{{ testCase.expected }}</code>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Code Editor & Output Panel -->
+  <div class="flex-1 flex flex-col m-1 sm:m-2 md:m-3 lg:m-4 ml-0 order-1 lg:order-2">
+    <!-- Code Editor Container -->
+    <div class="glass-card rounded-xl p-3 sm:p-4 md:p-5 mb-3 sm:mb-4">
+      <!-- Editor Header -->
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-3 sm:mb-4 gap-2 sm:gap-0">
+        <!-- Left Controls -->
+        <div class="flex flex-wrap items-center gap-2 sm:gap-4 w-full sm:w-auto">
+          <!-- Language Selection -->
+          <div class="relative">
+            <button (click)="toggleLanguageDropdown()"
+                    class="px-3 py-2 sm:px-4 sm:py-2 bg-white/10 hover:bg-white/15 border border-white/20 text-white rounded-lg flex items-center space-x-2 transition-all duration-300 text-xs sm:text-sm">
+              <i class="ri-code-s-slash-line"></i>
+              <span class="truncate max-w-[80px] sm:max-w-[100px]">{{ selectedLanguage }}</span>
+              <div class="w-3 h-3 sm:w-4 sm:h-4 flex items-center justify-center">
+                <i class="ri-arrow-down-s-line transition-transform duration-300" 
+                   [ngClass]="{'rotate-180': showLanguageDropdown}"></i>
+              </div>
+            </button>
+            
+            <!-- Language Dropdown -->
+            <div *ngIf="showLanguageDropdown" 
+                 class="absolute top-full left-0 mt-1 bg-gradient-to-b from-blue-900/95 to-indigo-900/95 backdrop-blur-xl rounded-lg border border-primary/50 shadow-2xl z-30 min-w-[150px] sm:min-w-[180px]">
+              <div class="p-2 space-y-1">
+                <div *ngFor="let lang of languages" 
+                     (click)="selectLanguage(lang)"
+                     class="language-option px-3 py-2 text-xs sm:text-sm text-white hover:bg-white/10 rounded cursor-pointer transition-all duration-200 flex items-center"
+                     [ngClass]="{'bg-white/20': selectedLanguage === lang.label}">
+                  <i class="ri-checkbox-blank-circle-line mr-2 text-xs" 
+                     [ngClass]="{'ri-checkbox-circle-fill text-primary': selectedLanguage === lang.label}"></i>
+                  <span class="truncate">{{ lang.label }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Run Button -->
+          <button (click)="runCode()"
+                  class="px-4 py-2 sm:px-6 sm:py-2 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-button neon-glow hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 whitespace-nowrap flex items-center justify-center text-xs sm:text-sm">
+            <div class="w-3 h-3 sm:w-4 sm:h-4 flex items-center justify-center mr-1 sm:mr-2">
+              <i class="ri-play-fill"></i>
+            </div>
+            <span class="hidden xs:inline">Run Code</span>
+            <span class="xs:hidden">Run</span>
+          </button>
+          
+          <!-- Clear Button -->
+          <button (click)="code = getDefaultCode()"
+                  class="px-3 py-2 bg-white/10 hover:bg-white/15 text-white rounded-lg text-xs sm:text-sm transition-all duration-300 flex items-center">
+            <i class="ri-delete-bin-line mr-1"></i>
+            <span class="hidden sm:inline">Clear</span>
+          </button>
+        </div>
+        
+        <!-- Navigation Buttons -->
+        <div class="flex space-x-2 w-full sm:w-auto justify-end sm:justify-start">
+          <button (click)="goToPrevious()"
+                  class="px-3 py-2 sm:px-4 sm:py-2 bg-white/10 hover:bg-white/20 text-white rounded-button transition-all duration-300 whitespace-nowrap text-xs sm:text-sm flex items-center">
+            <i class="ri-arrow-left-line mr-1"></i>
+            <span class="hidden sm:inline">Previous</span>
+          </button>
+          <button (click)="goToNext()"
+                  class="px-3 py-2 sm:px-4 sm:py-2 bg-gradient-to-r from-primary to-secondary text-white rounded-button neon-glow hover:scale-[1.02] transition-all duration-300 whitespace-nowrap text-xs sm:text-sm flex items-center">
+            <span class="hidden sm:inline">Next</span>
+            <i class="ri-arrow-right-line ml-1"></i>
+          </button>
+        </div>
+      </div>
+      
+      <!-- Code Editor -->
+      <div class="code-editor rounded-lg p-3 sm:p-4 h-64 sm:h-72 md:h-80 lg:h-96 overflow-y-auto relative">
+        <textarea [(ngModel)]="code" 
+                  (input)="saveCode()"
+                  (keydown)="onKeyDown($event)"
+                  class="w-full h-full bg-transparent text-green-300 font-mono text-xs sm:text-sm md:text-base resize-none outline-none leading-relaxed"
+                  placeholder="// Write your solution here...
+// Use the function signature provided
+// Example for Two Sum:
+function twoSum(nums, target) {
+    // Your code here
+}"
+                  spellcheck="false"></textarea>
+        
+        <!-- Suggestions Dropdown -->
+        <div *ngIf="showSuggestions" 
+             class="absolute bg-gray-800 border border-gray-600 rounded shadow-lg w-48 max-h-48 overflow-y-auto z-50"
+             [ngStyle]="{ top: suggestionPosition.top + 'px', left: suggestionPosition.left + 'px' }">
+          <div *ngFor="let suggestion of suggestions" 
+               (click)="selectSuggestion(suggestion)"
+               class="px-3 py-2 text-sm text-white hover:bg-gray-700 cursor-pointer">
+            {{ suggestion }}
+          </div>
+        </div>
+      </div>
+      
+      <!-- Editor Footer -->
+      <div class="mt-3 flex items-center justify-between text-xs text-blue-300">
+        <div class="flex items-center">
+          <i class="ri-information-line mr-1"></i>
+          <span>Lines: {{ getLineCount() }}</span>
+        </div>
+        <div class="flex items-center">
+          <i class="ri-keyboard-line mr-1"></i>
+          <span>Press Ctrl+Space for suggestions</span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Output Panel -->
+    <div class="glass-card rounded-xl p-3 sm:p-4 flex-1 flex flex-col">
+      <div class="flex items-center justify-between mb-3">
+        <h4 class="text-base sm:text-lg font-semibold text-white flex items-center">
+          <i class="ri-terminal-line mr-2"></i> Output
+        </h4>
+        <div class="flex space-x-1 sm:space-x-2">
+          <button (click)="setActiveTab('output')"
+                  [ngClass]="activeTab === 'output' ? 'bg-primary text-white' : 'bg-white/10 hover:bg-white/15 text-white'"
+                  class="px-2 py-1 sm:px-3 sm:py-1 rounded text-xs sm:text-sm transition-all duration-300 flex items-center">
+            <i class="ri-terminal-box-line mr-1"></i>
+            <span class="hidden sm:inline">Output</span>
+          </button>
+          <button (click)="setActiveTab('testcase')"
+                  [ngClass]="activeTab === 'testcase' ? 'bg-primary text-white' : 'bg-white/10 hover:bg-white/15 text-white'"
+                  class="px-2 py-1 sm:px-3 sm:py-1 rounded text-xs sm:text-sm transition-all duration-300 flex items-center">
+            <i class="ri-checkbox-multiple-line mr-1"></i>
+            <span class="hidden sm:inline">Test Results</span>
+          </button>
+          <button (click)="clearOutput()"
+                  class="px-2 py-1 sm:px-3 sm:py-1 bg-white/10 hover:bg-white/15 text-white rounded text-xs sm:text-sm transition-all duration-300">
+            <i class="ri-delete-bin-line"></i>
+          </button>
+        </div>
+      </div>
+      
+      <!-- Output Content -->
+      <div id="output-content" class="code-editor rounded-lg p-3 sm:p-4 flex-1 overflow-y-auto">
+        <div *ngIf="output; else noOutput" 
+             class="h-full">
+          <pre class="text-green-300 whitespace-pre-wrap font-mono text-xs sm:text-sm leading-relaxed">{{ output }}</pre>
+        </div>
+        <ng-template #noOutput>
+          <div class="h-full flex flex-col items-center justify-center text-center p-4">
+            <i class="ri-terminal-window-line text-4xl text-blue-400 mb-3"></i>
+            <p class="text-blue-300 text-sm">Run your code to see output here</p>
+            <p class="text-blue-400 text-xs mt-2">Click the "Run Code" button to execute your solution</p>
+          </div>
+        </ng-template>
+      </div>
+      
+      <!-- Output Footer -->
+      <div class="mt-3 pt-3 border-t border-white/10">
+        <div class="flex items-center justify-between text-xs text-blue-300">
+          <div class="flex items-center">
+            <i class="ri-time-line mr-1"></i>
+            <span>Last run: {{ getLastRunTime() }}</span>
+          </div>
+          <div class="flex items-center">
+            <i class="ri-bug-line mr-1"></i>
+            <span>Status: Ready</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

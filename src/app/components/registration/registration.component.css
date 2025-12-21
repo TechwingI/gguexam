@@ -1,0 +1,228 @@
+/* registration.component.css */
+
+/* Custom scrollbar for dropdowns */
+.bg-white::-webkit-scrollbar {
+  width: 6px;
+}
+
+.bg-white::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.bg-white::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 3px;
+}
+
+.bg-white::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Animation for dropdown */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.bg-white {
+  animation: fadeIn 0.2s ease-out;
+}
+
+/* Ensure dropdown appears above everything */
+.z-50 {
+  z-index: 50;
+}
+
+/* Fix for dropdown positioning */
+.dropdown-container {
+  position: relative;
+  overflow: visible !important;
+}
+
+.dropdown-content {
+  position: absolute;
+  z-index: 9999 !important;
+}
+
+/* Better hover states */
+.hover\:bg-blue-50:hover {
+  background-color: #eff6ff;
+}
+
+/* Selection indicator */
+.w-2.h-2 {
+  transition: all 0.2s ease;
+}
+
+/* Button improvements */
+.rounded-button {
+  border-radius: 10px;
+}
+
+.neon-glow {
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+}
+
+/* Input focus states */
+.focus\:ring-primary:focus {
+  --tw-ring-color: rgba(59, 130, 246, 0.5);
+}
+
+/* Glass card effect */
+.glass-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Floating animation */
+.floating-animation {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Card entrance animation */
+.card-entrance {
+  animation: slideUp 0.5s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive fixes */
+@media (max-width: 768px) {
+  .glass-card {
+    margin: 1rem;
+    padding: 1.5rem !important;
+  }
+  
+  .grid-cols-1 {
+    grid-template-columns: 1fr !important;
+  }
+  
+  .md\:col-span-2 {
+    grid-column: span 1 !important;
+  }
+  
+  .dropdown-content {
+    position: fixed;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%);
+    width: 90% !important;
+    max-width: 400px !important;
+    max-height: 50vh !important;
+    z-index: 99999 !important;
+  }
+}
+
+/* Mobile optimization */
+@media (max-width: 640px) {
+  .min-h-screen {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .glass-card {
+    max-width: 100% !important;
+    padding: 1.25rem !important;
+  }
+  
+  .text-xl {
+    font-size: 1.5rem !important;
+  }
+  
+  .text-base {
+    font-size: 0.875rem !important;
+  }
+  
+  .space-y-4 > * + * {
+    margin-top: 1rem !important;
+  }
+  
+  .gap-4 > * {
+    gap: 1rem !important;
+  }
+}
+
+/* Tablet optimization */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .glass-card {
+    max-width: 90% !important;
+  }
+  
+  .grid-cols-1 {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+/* Ensure form is responsive */
+@media (max-width: 480px) {
+  .px-2 {
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+  }
+  
+  .glass-card {
+    padding: 1rem !important;
+    border-radius: 1rem !important;
+  }
+  
+  button[type="submit"] {
+    padding-top: 0.75rem !important;
+    padding-bottom: 0.75rem !important;
+    font-size: 0.875rem !important;
+  }
+  
+  .text-sm {
+    font-size: 0.8125rem !important;
+  }
+}
+
+/* Dropdown click outside backdrop */
+.dropdown-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: transparent;
+  z-index: 40;
+}
+
+/* Rotate arrow animation */
+.rotate-180 {
+  transform: rotate(180deg);
+}
+
+/* Ensure proper stacking */
+.z-20 {
+  z-index: 20;
+}
+
+.z-10 {
+  z-index: 10;
+}

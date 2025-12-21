@@ -1,0 +1,228 @@
+<!-- results-page.component.html -->
+<div class="min-h-screen p-4 sm:p-8 relative glacier-bg">
+  <div id="snowfall-container" class="fixed inset-0 pointer-events-none z-10"></div>
+
+  <div
+    class="absolute inset-0 bg-cover bg-center bg-no-repeat"
+    [style.background-image]="'url(https://readdy.ai/api/search-image?query=Magical%20Christmas%20winter%20wonderland%20scene%20with%20Santa%20Claus%20riding%20his%20sleigh%20pulled%20by%20flying%20reindeer%20over%20snowy%20glacier%20mountains%2C%20carrying%20colorful%20gift%20bags%2C%20Northern%20Lights%20dancing%20in%20the%20starry%20night%20sky%2C%20snow-covered%20pine%20trees%2C%20crystalline%20ice%20formations%2C%20peaceful%20winter%20landscape%2C%20cinematic%20lighting%2C%20festive%20holiday%20atmosphere%2C%20detailed%203D%20rendering%20style&width=1920&height=1080&seq=christmas-glacier-results&orientation=landscape)'"
+    style="opacity: 0.3;"
+  ></div>
+
+  <div class="max-w-6xl mx-auto relative z-10">
+    <div class="text-center mb-8">
+      <h1 class="text-3xl sm:text-4xl font-bold text-white neon-text mb-2 font-['Pacifico']">
+        🎅 Christmas Coding Challenge Results
+      </h1>
+      <p class="text-lg sm:text-xl text-blue-200">
+        Your performance analysis is ready!
+      </p>
+    </div>
+
+    <!-- Candidate Info -->
+    <div
+      *ngIf="user"
+      class="glass-card rounded-xl p-4 sm:p-6 mb-6 max-w-2xl mx-auto"
+    >
+      <h3 class="text-xl font-semibold text-white mb-4 flex items-center">
+        <i class="ri-user-3-line mr-2"></i> Candidate Information
+      </h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left">
+        <div>
+          <div class="text-sm text-blue-200">Username</div>
+          <div class="text-white font-medium">{{ user.username }}</div>
+        </div>
+        <div>
+          <div class="text-sm text-blue-200">Group</div>
+          <div class="text-white font-medium">{{ user.group }}</div>
+        </div>
+        <div>
+          <div class="text-sm text-blue-200">Email</div>
+          <div class="text-white font-medium">{{ user.email }}</div>
+        </div>
+        <div>
+          <div class="text-sm text-blue-200">Course</div>
+          <div class="text-white font-medium">{{ user.course }}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Overall Performance -->
+    <div class="glass-card rounded-2xl p-6 sm:p-8 mb-8 pulse-glow">
+      <div class="text-center mb-6">
+        <div class="text-5xl sm:text-6xl font-bold text-white neon-text mb-2">
+          {{ finalScore }}%
+        </div>
+        <div class="text-xl text-blue-200">Overall Performance</div>
+      </div>
+      <div class="flex flex-wrap justify-center gap-6 sm:gap-8 mt-6">
+        <div class="text-center min-w-[100px]">
+          <div class="text-2xl sm:text-3xl font-bold text-green-400">
+            {{ correctAnswers }}
+          </div>
+          <div class="text-sm text-blue-200">Correct</div>
+          <div class="text-xs text-green-300 mt-1">✓ Good work</div>
+        </div>
+        <div class="text-center min-w-[100px]">
+          <div class="text-2xl sm:text-3xl font-bold text-red-400">
+            {{ incorrectAnswers }}
+          </div>
+          <div class="text-sm text-blue-200">Incorrect</div>
+          <div class="text-xs text-red-300 mt-1">Review needed</div>
+        </div>
+        <div class="text-center min-w-[100px]">
+          <div class="text-2xl sm:text-3xl font-bold text-yellow-400">
+            {{ totalTime }}
+          </div>
+          <div class="text-sm text-blue-200">Time Taken</div>
+          <div class="text-xs text-yellow-300 mt-1">⏱️ Recorded</div>
+        </div>
+        <div class="text-center min-w-[100px]">
+          <div class="text-2xl sm:text-3xl font-bold text-blue-400">
+            {{ correctAnswers + incorrectAnswers }}/{{ examService.getTotalQuestions() }}
+          </div>
+          <div class="text-sm text-blue-200">Total Attempted</div>
+          <div class="text-xs text-blue-300 mt-1">Completed</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 mb-8">
+      <div class="glass-card rounded-xl p-4 sm:p-6">
+        <h3 class="text-xl font-semibold text-white mb-4 flex items-center">
+          <i class="ri-bar-chart-line mr-2"></i> Section-wise Performance
+        </h3>
+        <div id="performance-chart" style="height: 300px;"></div>
+        <div class="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div
+            *ngFor="let section of sectionNames; let i = index"
+            class="bg-white/10 rounded-lg p-3 text-center"
+          >
+            <div class="text-lg font-bold text-white">
+              {{ performanceData[i] }}/{{ maxScores[i] }}
+            </div>
+            <div class="text-sm text-blue-200">{{ section }}</div>
+            <div
+              class="text-xs mt-1"
+              [ngClass]="getPerformanceColor(performanceData[i], maxScores[i])"
+            >
+              {{ getPerformanceText(performanceData[i], maxScores[i]) }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass-card rounded-xl p-4 sm:p-6">
+        <h3 class="text-xl font-semibold text-white mb-4 flex items-center">
+          <i class="ri-pie-chart-line mr-2"></i> Score Distribution
+        </h3>
+        <div id="score-chart" style="height: 300px;"></div>
+        <div class="mt-4 grid grid-cols-2 gap-4">
+          <div class="bg-green-500/20 rounded-lg p-4 text-center">
+            <div class="text-xl font-bold text-green-400">
+              {{ correctAnswers }}
+            </div>
+            <div class="text-sm text-blue-200">Correct Answers</div>
+            <div class="text-xs text-green-300 mt-1">
+              Accuracy:
+              {{
+                (correctAnswers + incorrectAnswers)
+                  ? ((correctAnswers / (correctAnswers + incorrectAnswers)) * 100).toFixed(1)
+                  : '0.0'
+              }}%
+            </div>
+          </div>
+          <div class="bg-red-500/20 rounded-lg p-4 text-center">
+            <div class="text-xl font-bold text-red-400">
+              {{ incorrectAnswers }}
+            </div>
+            <div class="text-sm text-blue-200">Incorrect Answers</div>
+            <div class="text-xs text-red-300 mt-1">Review recommended</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Detailed Analysis -->
+    <div class="glass-card rounded-xl p-4 sm:p-6 mb-8">
+      <h3 class="text-xl font-semibold text-white mb-6 flex items-center">
+        <i class="ri-file-text-line mr-2"></i> Detailed Analysis
+      </h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-gradient-to-br from-blue-500/20 to-cyan-500/20 rounded-lg p-4 text-center">
+          <div class="text-2xl font-bold text-blue-400">
+            {{ performanceData[0] }}/{{ maxScores[0] }}
+          </div>
+          <div class="text-sm text-blue-200">Aptitude</div>
+          <div class="text-xs text-blue-300 mt-2">
+            Logical and quantitative skills.
+          </div>
+        </div>
+
+        <div class="bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-lg p-4 text-center">
+          <div class="text-2xl font-bold text-green-400">
+            {{ performanceData[1] }}/{{ maxScores[1] }}
+          </div>
+          <div class="text-sm text-blue-200">Verbal</div>
+          <div class="text-xs text-green-300 mt-2">
+            Grammar and comprehension.
+          </div>
+        </div>
+
+        <div class="bg-gradient-to-br from-yellow-500/20 to-amber-500/20 rounded-lg p-4 text-center">
+          <div class="text-2xl font-bold text-yellow-400">
+            {{ performanceData[2] }}/{{ maxScores[2] }}
+          </div>
+          <div class="text-sm text-blue-200">Technical</div>
+          <div class="text-xs text-yellow-300 mt-2">
+            Core CS and coding MCQs.
+          </div>
+        </div>
+
+        <div class="bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-lg p-4 text-center">
+          <div class="text-2xl font-bold text-purple-400">
+            {{ performanceData[3] }}/{{ maxScores[3] }}
+          </div>
+          <div class="text-sm text-blue-200">Coding</div>
+          <div class="text-xs text-purple-300 mt-2">
+            Hands-on problem solving.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="text-center space-y-4 sm:space-y-0 sm:space-x-4">
+      <button
+        (click)="retryExam()"
+        class="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-primary to-secondary text-white font-semibold rounded-button neon-glow hover:scale-105 transition-all duration-300 whitespace-nowrap inline-flex items-center justify-center"
+      >
+        <div class="w-5 h-5 flex items-center justify-center mr-2">
+          <i class="ri-refresh-line"></i>
+        </div>
+        Retry Christmas Challenge
+      </button>
+
+      <button
+        (click)="viewSolutions()"
+        class="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-white/20 text-white font-semibold rounded-button hover:bg-white/30 transition-all duration-300 whitespace-nowrap inline-flex items-center justify-center mt-4 sm:mt-0"
+      >
+        <div class="w-5 h-5 flex items-center justify-center mr-2">
+          <i class="ri-file-text-line"></i>
+        </div>
+        View Solutions
+      </button>
+    </div>
+
+    <div class="text-center mt-8 pt-6 border-t border-white/10">
+      <p class="text-blue-300 text-sm">
+        <i class="ri-information-line mr-1"></i>
+        This report is generated automatically. For detailed feedback, consult
+        with your instructor.
+      </p>
+      <p class="text-blue-400 text-xs mt-2">
+        🎄 Merry Christmas &amp; Happy Coding! 🎅
+      </p>
+    </div>
+  </div>
+</div>

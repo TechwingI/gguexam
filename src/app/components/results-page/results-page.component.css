@@ -1,0 +1,85 @@
+/* Add any custom styles for the results page if needed */
+
+/* Animation for score display */
+@keyframes scoreReveal {
+  0% { transform: scale(0.5); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.score-display {
+  animation: scoreReveal 1s ease-out;
+}
+
+/* Sparkle animation for celebration */
+.sparkle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: #FFD700;
+  border-radius: 50%;
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+@keyframes sparkle {
+  0%, 100% { opacity: 0; transform: scale(0); }
+  50% { opacity: 1; transform: scale(1); }
+}
+
+/* Confetti animation */
+.confetti {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  opacity: 0;
+  animation: confettiFall 5s linear infinite;
+}
+
+@keyframes confettiFall {
+  0% {
+    transform: translateY(-100px) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(1000px) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+/* Performance meter animation */
+.performance-meter {
+  position: relative;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.performance-meter::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  border-radius: 3px;
+  animation: fillMeter 2s ease-out forwards;
+}
+
+@keyframes fillMeter {
+  from { width: 0%; }
+  to { width: var(--fill-percentage); }
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .glass-card {
+    padding: 1rem;
+  }
+  
+  .text-6xl {
+    font-size: 3.5rem;
+  }
+  
+  .text-5xl {
+    font-size: 3rem;
+  }
+}

@@ -1,0 +1,182 @@
+<div class="min-h-screen w-full overflow-hidden flex items-center justify-center px-2 sm:px-6 lg:px-10 relative glacier-bg">
+  <div id="snowfall-container" class="fixed inset-0 pointer-events-none z-10"></div>
+
+  <!-- Background Image -->
+  <div
+    class="absolute inset-0 bg-cover bg-center bg-no-repeat animate-ken-burns"
+    [style.background-image]="'url(https://readdy.ai/api/search-image?query=Magical%20Christmas%20winter%20wonderland%20scene%20with%20Santa%20Claus%20riding%20his%20sleigh%20pulled%20by%20flying%20reindeer%20over%20snowy%20glacier%20mountains%2C%20carrying%20colorful%20gift%20bags%2C%20Northern%20Lights%20dancing%20in%20the%20starry%20night%20sky%2C%20snow-covered%20pine%20trees%2C%20crystalline%20ice%20formations%2C%20peaceful%20winter%20landscape%2C%20cinematic%20lighting%2C%20festive%20holiday%20atmosphere%2C%20detailed%203D%20rendering%20style&width=1920&height=1080&seq=christmas-glacier-registration&orientation=landscape)'"
+    style="opacity: 0.85;">
+  </div>
+
+  <!-- Color Layer -->
+  <div class="absolute inset-0 winter-bg opacity-40"></div>
+
+  <!-- Floating Aurora -->
+  <div class="aurora-container">
+    <div class="aurora aurora-1"></div>
+    <div class="aurora aurora-2"></div>
+    <div class="aurora aurora-3"></div>
+  </div>
+
+  <!-- Floating Icons -->
+  <div class="floating-christmas">
+    <div class="christmas-element element-1">🎁</div>
+    <div class="christmas-element element-2">⭐</div>
+    <div class="christmas-element element-3">🔔</div>
+    <div class="christmas-element element-4">🎄</div>
+    <div class="christmas-element element-5">❄️</div>
+    <div class="christmas-element element-6">🦌</div>
+  </div>
+
+  <!-- FORM CARD -->
+  <div
+    class="glass-card rounded-2xl p-4 sm:p-6 lg:p-8 w-full 
+           max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl xl:max-w-3xl 
+           mx-auto relative z-20 floating-animation card-entrance">
+
+    <div class="text-center mb-6 lg:mb-8">
+      <h1 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white neon-text mb-2 font-['Pacifico']">
+        Glacier Coding Challenge
+      </h1>
+      <p class="text-base sm:text-lg md:text-xl text-blue-100">
+        Christmas Winter Programming Adventure
+      </p>
+    </div>
+
+    <form (ngSubmit)="onSubmit()" class="space-y-4 sm:space-y-6">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+
+        <div>
+          <label class="block text-sm font-medium text-blue-100 mb-2">Username</label>
+          <input
+            type="text"
+            [(ngModel)]="username"
+            name="username"
+            required
+            class="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm md:text-base
+              bg-white/10 border border-white/20 rounded-lg text-white placeholder-blue-200
+              focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"/>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-blue-100 mb-2">Email Address</label>
+          <input
+            type="email"
+            [(ngModel)]="email"
+            name="email"
+            required
+            class="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm md:text-base
+              bg-white/10 border border-white/20 rounded-lg text-white placeholder-blue-200
+              focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"/>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-blue-100 mb-2">Password</label>
+          <input
+            type="password"
+            [(ngModel)]="password"
+            name="password"
+            required
+            class="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm md:text-base
+              bg-white/10 border border-white/20 rounded-lg text-white placeholder-blue-200
+              focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"/>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-blue-100 mb-2">PIN Number (10 digits)</label>
+          <input
+            type="text"
+            [(ngModel)]="pin"
+            name="pin"
+            pattern="[0-9]{10}"
+            maxlength="10"
+            placeholder="Enter 10 digit PIN"
+            required
+            (keypress)="onPinKeyPress($event)"
+            class="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm md:text-base
+              bg-white/10 border border-white/20 rounded-lg text-white placeholder-blue-200
+              focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"/>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-blue-100 mb-2">Mobile Number</label>
+          <input
+            type="tel"
+            [(ngModel)]="mobile"
+            name="mobile"
+            required
+            class="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm md:text-base
+              bg-white/10 border border-white/20 rounded-lg text-white placeholder-blue-200
+              focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"/>
+        </div>
+
+        <div class="lg:col-span-2">
+          <label class="block text-sm font-medium text-blue-100 mb-2">Select Group</label>
+          <div class="relative">
+            <button
+              type="button"
+              (click)="toggleGroupDropdown()"
+              class="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm md:text-base
+                bg-white/10 border border-white/20 rounded-lg text-white text-left
+                focus:outline-none focus:ring-2 focus:ring-primary flex items-center justify-between hover:bg-white/15 transition-colors duration-200">
+              <span class="truncate">{{ getSelectedGroupLabel() }}</span>
+              <i class="ri-arrow-down-s-line ml-2 transition-transform duration-200" [ngClass]="{'rotate-180': showGroupDropdown}"></i>
+            </button>
+
+            <!-- Group Dropdown with White Background -->
+            <div *ngIf="showGroupDropdown"
+              class="absolute top-full left-0 w-full mt-1 bg-white rounded-lg border border-gray-300 shadow-lg z-30 max-h-60 overflow-y-auto">
+              <div class="py-1">
+                <div *ngFor="let group of groups"
+                  (click)="selectGroup(group)"
+                  class="px-3 py-2 text-sm md:text-base text-gray-800 hover:bg-blue-50 cursor-pointer transition-colors duration-150 flex items-center"
+                  [class.bg-blue-50]="selectedGroup === group.value">
+                  <div class="w-2 h-2 rounded-full bg-blue-500 mr-2" [class.invisible]="selectedGroup !== group.value"></div>
+                  {{ group.label }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-2">
+          <label class="block text-sm font-medium text-blue-100 mb-2">Select Combo Course</label>
+          <div class="relative">
+            <button
+              type="button"
+              (click)="toggleCourseDropdown()"
+              class="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm md:text-base
+                bg-white/10 border border-white/20 rounded-lg text-white text-left
+                focus:outline-none focus:ring-2 focus:ring-primary flex items-center justify-between hover:bg-white/15 transition-colors duration-200">
+              <span class="truncate">{{ getSelectedCourseLabel() }}</span>
+              <i class="ri-arrow-down-s-line ml-2 transition-transform duration-200" [ngClass]="{'rotate-180': showCourseDropdown}"></i>
+            </button>
+
+            <!-- Course Dropdown with White Background -->
+            <div *ngIf="showCourseDropdown"
+              class="absolute top-full left-0 w-full mt-1 bg-white rounded-lg border border-gray-300 shadow-lg z-30 max-h-60 overflow-y-auto">
+              <div class="py-1">
+                <div *ngFor="let course of courses"
+                  (click)="selectCourse(course)"
+                  class="px-3 py-2 text-sm md:text-base text-gray-800 hover:bg-blue-50 cursor-pointer transition-colors duration-150 flex items-center"
+                  [class.bg-blue-50]="selectedCourse === course.value">
+                  <div class="w-2 h-2 rounded-full bg-blue-500 mr-2" [class.invisible]="selectedCourse !== course.value"></div>
+                  {{ course.label }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <button type="submit"
+        class="w-full py-3 sm:py-4 bg-gradient-to-r from-primary to-secondary text-white
+          font-semibold rounded-button neon-glow hover:scale-105 transition-all duration-300
+          flex items-center justify-center text-sm sm:text-base md:text-lg">
+        <i class="ri-code-s-slash-line mr-2"></i>
+        Begin Christmas Coding Adventure
+      </button>
+    </form>
+  </div>
+</div>

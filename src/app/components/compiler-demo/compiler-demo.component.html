@@ -1,0 +1,104 @@
+<div class="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 text-white">
+  <div class="container mx-auto px-4 py-12">
+    <!-- Header -->
+    <header class="text-center mb-16">
+      <h1 class="text-4xl md:text-6xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
+        Simple Code Compiler
+      </h1>
+      <p class="text-xl text-gray-300 max-w-2xl mx-auto">
+        A lightweight, browser-based code compiler with real-time suggestions, error detection, and test case execution
+      </p>
+    </header>
+
+    <!-- Hero Section -->
+    <div class="bg-gray-800/50 backdrop-blur-lg rounded-2xl p-8 mb-16 border border-gray-700 shadow-2xl">
+      <div class="flex flex-col md:flex-row items-center gap-8">
+        <div class="flex-1">
+          <h2 class="text-3xl font-bold mb-4">Code Anywhere, Anytime</h2>
+          <p class="text-gray-300 mb-6">
+            Our simplified compiler provides essential features for coding practice without the complexity of a full IDE. 
+            Perfect for students, educators, and coding enthusiasts who want to quickly test algorithms and solutions.
+          </p>
+          <button 
+            (click)="navigateToCompiler()"
+            class="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-bold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105">
+            Try the Compiler Now
+          </button>
+        </div>
+        <div class="flex-1 flex justify-center">
+          <div class="bg-gray-900 border border-gray-700 rounded-xl p-6 w-full max-w-md">
+            <div class="flex items-center mb-4">
+              <div class="w-3 h-3 bg-red-500 rounded-full mr-2"></div>
+              <div class="w-3 h-3 bg-yellow-500 rounded-full mr-2"></div>
+              <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+            </div>
+            <div class="font-mono text-sm">
+              <div class="text-gray-500">// Write your solution here</div>
+              <div class="text-blue-400">function</div>
+              <div class="text-yellow-300">solution</div>
+              <div class="text-gray-300">(input) &#123;</div>
+              <div class="text-gray-300">&nbsp;&nbsp;// Your code here</div>
+              <div class="text-gray-300">&nbsp;&nbsp;</div>
+              <div class="text-gray-300">&#125;</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Features Grid -->
+    <section class="mb-16">
+      <h2 class="text-3xl font-bold text-center mb-12">Powerful Features</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div *ngFor="let feature of features" 
+             class="bg-gray-800/50 backdrop-blur-lg rounded-xl p-6 border border-gray-700 hover:border-blue-500 transition-all duration-300 transform hover:-translate-y-1">
+          <div class="text-4xl mb-4">{{ feature.icon }}</div>
+          <h3 class="text-xl font-bold mb-2">{{ feature.title }}</h3>
+          <p class="text-gray-400">{{ feature.description }}</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="mb-16">
+      <h2 class="text-3xl font-bold text-center mb-12">How It Works</h2>
+      <div class="flex flex-col md:flex-row gap-8">
+        <div class="flex-1 bg-gray-800/50 backdrop-blur-lg rounded-xl p-6 border border-gray-700">
+          <div class="text-5xl font-bold text-blue-500 mb-4">1</div>
+          <h3 class="text-xl font-bold mb-2">Select Language</h3>
+          <p class="text-gray-400">
+            Choose from JavaScript, Python, Java, or C++. Each language comes with its own set of syntax rules and suggestions.
+          </p>
+        </div>
+        <div class="flex-1 bg-gray-800/50 backdrop-blur-lg rounded-xl p-6 border border-gray-700">
+          <div class="text-5xl font-bold text-blue-500 mb-4">2</div>
+          <h3 class="text-xl font-bold mb-2">Write & Get Suggestions</h3>
+          <p class="text-gray-400">
+            As you type, get contextual suggestions. Syntax errors are highlighted in real-time with detailed explanations.
+          </p>
+        </div>
+        <div class="flex-1 bg-gray-800/50 backdrop-blur-lg rounded-xl p-6 border border-gray-700">
+          <div class="text-5xl font-bold text-blue-500 mb-4">3</div>
+          <h3 class="text-xl font-bold mb-2">Test & Validate</h3>
+          <p class="text-gray-400">
+            Run your code against predefined test cases to verify correctness. See exactly which tests pass or fail.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Call to Action -->
+    <div class="text-center">
+      <h2 class="text-3xl font-bold mb-6">Ready to Start Coding?</h2>
+      <p class="text-gray-300 mb-8 max-w-2xl mx-auto">
+        Experience the power of a simplified coding environment that runs entirely in your browser. 
+        No installations, no setups - just pure coding.
+      </p>
+      <button 
+        (click)="navigateToCompiler()"
+        class="bg-gradient-to-r from-green-500 to-teal-600 hover:from-green-600 hover:to-teal-700 text-white font-bold py-4 px-12 rounded-lg text-lg transition-all duration-300 transform hover:scale-105">
+        Launch Compiler
+      </button>
+    </div>
+  </div>
+</div>

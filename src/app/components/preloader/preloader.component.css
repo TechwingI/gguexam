@@ -1,0 +1,265 @@
+/* Responsive Preloader Styles */
+@media (max-width: 640px) {
+  /* Mobile adjustments */
+  .christmas-tree {
+    margin-bottom: 2rem;
+  }
+  
+  .tree-star {
+    font-size: 1.75rem !important;
+  }
+  
+  .tree-layer {
+    font-size: 2.25rem !important;
+  }
+  
+  .tree-trunk {
+    font-size: 1.25rem !important;
+  }
+  
+  .christmas-float {
+    font-size: 1.5rem !important;
+  }
+  
+  /* Positioning for mobile */
+  .christmas-gift-1 {
+    top: 5% !important;
+    left: 5% !important;
+  }
+  
+  .christmas-gift-2 {
+    top: 15% !important;
+    right: 5% !important;
+  }
+  
+  .christmas-gift-3 {
+    bottom: 25% !important;
+    left: 10% !important;
+  }
+  
+  .christmas-gift-4 {
+    top: 65% !important;
+    right: 5% !important;
+  }
+  
+  .christmas-gift-5 {
+    bottom: 15% !important;
+    right: 20% !important;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 768px) {
+  /* Tablet adjustments */
+  .tree-star {
+    font-size: 2rem !important;
+  }
+  
+  .tree-layer {
+    font-size: 3rem !important;
+  }
+  
+  .tree-trunk {
+    font-size: 1.5rem !important;
+  }
+  
+  .christmas-float {
+    font-size: 1.75rem !important;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  /* Small desktop adjustments */
+  .tree-star {
+    font-size: 2.25rem !important;
+  }
+  
+  .tree-layer {
+    font-size: 3.25rem !important;
+  }
+  
+  .tree-trunk {
+    font-size: 1.75rem !important;
+  }
+  
+  .christmas-float {
+    font-size: 2rem !important;
+  }
+}
+
+@media (min-width: 1025px) and (max-width: 1280px) {
+  /* Desktop adjustments */
+  .tree-star {
+    font-size: 2.5rem !important;
+  }
+  
+  .tree-layer {
+    font-size: 3.5rem !important;
+  }
+  
+  .tree-trunk {
+    font-size: 2rem !important;
+  }
+  
+  .christmas-float {
+    font-size: 2.25rem !important;
+  }
+}
+
+@media (min-width: 1281px) {
+  /* Large desktop adjustments */
+  .tree-star {
+    font-size: 3rem !important;
+  }
+  
+  .tree-layer {
+    font-size: 4rem !important;
+  }
+  
+  .tree-trunk {
+    font-size: 2.5rem !important;
+  }
+  
+  .christmas-float {
+    font-size: 2.5rem !important;
+  }
+}
+
+/* Responsive typewriter animation */
+@media (max-width: 640px) {
+  .typewriter {
+    font-size: 1.5rem;
+    animation: typewriterMobile 2.5s steps(30, end), blink-caret 0.75s step-end infinite;
+  }
+  
+  @keyframes typewriterMobile {
+    from { width: 0; }
+    to { width: 100%; }
+  }
+}
+
+/* Responsive bounce animations */
+@media (max-width: 768px) {
+  .animate-bounce {
+    animation-duration: 0.8s;
+  }
+  
+  .delay-100 { animation-delay: 0.1s; }
+  .delay-200 { animation-delay: 0.2s; }
+  .delay-300 { animation-delay: 0.3s; }
+  .delay-400 { animation-delay: 0.4s; }
+  .delay-500 { animation-delay: 0.5s; }
+}
+
+/* Responsive progress bar animation */
+@media (max-width: 640px) {
+  .loading-progress {
+    animation: loadingProgressMobile 3s ease-in-out forwards;
+  }
+  
+  @keyframes loadingProgressMobile {
+    0% { width: 0%; }
+    25% { width: 25%; }
+    50% { width: 50%; }
+    75% { width: 75%; }
+    100% { width: 100%; }
+  }
+}
+
+/* Hide floating elements on very small screens */
+@media (max-width: 480px) {
+  .christmas-gift-1,
+  .christmas-gift-2,
+  .christmas-gift-3,
+  .christmas-gift-4,
+  .christmas-gift-5 {
+    display: none;
+  }
+  
+  .christmas-tree {
+    margin-bottom: 1.5rem;
+  }
+  
+  .tree-layer {
+    font-size: 2rem !important;
+  }
+}
+
+/* Landscape mode adjustments */
+@media (max-height: 600px) and (orientation: landscape) {
+  .christmas-tree {
+    margin-bottom: 1rem;
+    transform: scale(0.8);
+  }
+  
+  h1 {
+    font-size: 1.5rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+  
+  p {
+    font-size: 1rem !important;
+    margin-bottom: 1rem !important;
+  }
+  
+  .progress-bar-container {
+    margin-bottom: 0.5rem;
+  }
+  
+  .christmas-elements {
+    margin-top: 0.5rem;
+  }
+  
+  .loading-tips {
+    display: none;
+  }
+}
+
+/* Ultra-wide screens */
+@media (min-width: 1920px) {
+  .preloader-container {
+    padding: 4rem;
+  }
+  
+  .christmas-tree {
+    margin-bottom: 3rem;
+  }
+  
+  .tree-star {
+    font-size: 3.5rem !important;
+  }
+  
+  .tree-layer {
+    font-size: 4.5rem !important;
+  }
+  
+  .tree-trunk {
+    font-size: 3rem !important;
+  }
+  
+  h1 {
+    font-size: 3.5rem !important;
+  }
+  
+  p {
+    font-size: 1.75rem !important;
+  }
+  
+  .progress-bar {
+    height: 0.75rem !important;
+  }
+  
+  .christmas-float {
+    font-size: 3rem !important;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .christmas-tree {
+    animation-duration: 3s;
+  }
+  
+  .tree-star {
+    animation-duration: 1.5s;
+  }
+}
